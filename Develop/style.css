@@ -21,7 +21,8 @@ textarea{
   border-bottom: 10px solid black;
 }
 
-#currentDay {
+#currentDay,
+#currentTime {
   font-style: italic;
 }
 
