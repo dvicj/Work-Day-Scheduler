@@ -11,16 +11,16 @@
     />
     <!--moment style sheet-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <!-- font awesome style sheet-->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
     />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="./Develop/style.css" />
     <title>Work Day Scheduler</title>
   </head>
@@ -30,30 +30,11 @@
       <h1 class="display-3">Work Day Scheduler</h1>
       <h2 class="lead">A simple calendar app for scheduling your work day</h2>
       <p id="currentDay" class="lead"></p>
+      <p id="currentTime" class="lead"></p>
     </header>
-    <div class="container schedule-box">
-      <div class="row schedule-row">
-        <div class = "col-3 schedule-time">
-          <div class="time-block">9:00</div>
-        </div>
-        <div class = "col-6 schedule-task">
-          <textarea class="task" placeholder="Enter task."></textarea>
-        </div>
-        <div class= "col-3 schedule-save">
-          <div class="saveBtn"><button class="save">SAVE BUTTON</button></div>
-        </div>
-     </div>
-     <div class="row">
-        <div class = "col-3 schedule-time">
-          <div class="time-block">9:00</div>
-        </div>
-        <div class = "col-6 schedule-task">
-          <textarea class="task" placeholder="Enter task."></textarea>
-        </div>
-        <div class= "col-3 schedule-save">
-          <div class="saveBtn"><button class="save">SAVE BUTTON</button></div>
-        </div>
-     </div>
+
+    <div class="container">
+      
    </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
