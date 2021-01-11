@@ -5,108 +5,181 @@ var scheduleRow = document.querySelector(".row .schedule-row")
 var scheduleTime = document.querySelector(".schedule-time");
 var timeBlock = document.querySelector(".time-block");
 var scheduleTask = document.querySelector(".schedule.task");
-//var scheduleSave = document.querySelector(".saveBtn .save");
 var currentDay = document.getElementById("currentDay");
 var currentTime = document.getElementById("currentTime");
-//var taskText = document.querySelector("task").value;
 
-var hourArray = [
+
+var myDay = [
     {
-    hour: "9:00 AM" //index 0
+      index: "0",
+      hour: "09", //index 0
+      minute: ":00",
+      time: "09",
+      reminder: ''
     }, 
     {
-    hour: "10:00 AM" //index 1
+      index:"1",
+      hour: "10", //index 1
+      minute: ":00",
+      time: "10",
+      reminder: ''
     },
     {
-    hour: "11:00 AM" //index 2
+      index:"2",
+      hour: "11", //index 2
+      minute: ":00",
+      time: "11",
+      reminder: ''
     },
     {
-    hour: "12:00 AM" //index 3
+      index:"3",
+      hour: "12", //index 3
+      minute: ":00",
+      time: "12",
+      reminder: ''
     },
     {
-    hour: "1:00 PM" //index 4
+      index:"4",
+      hour: "13", //index 4
+      minute: ":00",
+      time: "13",
+      reminder: ''
     },
     {
-    hour: "2:00 PM" //index 5
+      index:"5",
+      hour: "14", //index 5
+      minute: ":00",
+      time: "14",
+      reminder: ''
     },
     {
-    hour: "3:00 PM" //index 6
+      index:"6",
+      hour: "15", //index 6
+      minute: ":00",
+      time: "15",
+      reminder: ''
     },
     {
-    hour: "4:00 PM" //index 7
+      index:"7",
+      hour: "16", //index 7
+      minute: ":00",
+      time: "16",
+      reminder: ''
     },
     {
-    hour: "5:00 PM" //index 8 
+      index:"8",
+      hour: "17", //index 8 
+      minute: ":00",
+      time: "17",
+      reminder: ''
     }            
 ];
 
-$(".time-block") {
-    var time = $(this)
-    .val()
-    .trim(); 
-    
+//create array to hold tasks for saving
+var tasks = [];
+var taskTypeInput = $(".user-input").value;
+//save task as an object with time, status and push into task array 
+var taskDataObj = {
+  time: time, 
+  type: taskTypeInput
+}; 
+taskDataObj.index = taskTypeInput; 
+tasks.push(taskDataObj);
+//save tasks to localStorage 
+saveTasks(); 
+
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  console.log("tasks saved");
+};
+
+var loadTasks = function() {
+  var savedTasks = localStorage.getItem("tasks");
+  if (!savedTasks) {
+    return false; 
+  }
+  console.log("Saved tasks found!")
+  savedTasks = JSON.parse(savedTasks); 
 }
+
+
+//show current date 
+$('#currentDay').html("Today's date: " + moment().format("ddd. MMMM Do, YYYY"));
 
 //current time - update every minute 
 function updateTime() {
-    var currentTime = moment().format("h:mm A");
-    $('#currentTime').html("Current time: " + currentTime);
+  var currentTime = moment().format("HH:mm A");
+  $('#currentTime').html("Current time: " + currentTime);
 };
 
 updateTime (); 
 setInterval(function() {
-    updateTime(); 
+  updateTime(); 
 },60000);
 
-hourArray.hour = moment().format("h:mm A");
-
-//if date is in the future, add future class 
-if (hourArray[i] > currentTime) {
-    var futureHour = $("<div>").addClass("future");
+//save data to local storage 
+function saveReminders() {
+  localStorage.setItem("myDay",JSON.stringify(myDay));
 }
-else if (hourArray[i] === currentTime) {
-    var currentHour = $("<div>").addClass("present");
+
+//sets any data in local storage to the view 
+function displayReminders() {
+  myDay.forEach(function(_thisHour) {
+    $(`#${_thisHour.index}`).val(_thisHour.reminder); 
+  })
 }
-// else {
-//     var hourArray[i] = $("<div>").addClass("past");
-// }
 
-//create columns in bootstrap that are added with each time on the left and save button on the right
+function init() {
+  var storedDay = JSON.parse(localStorage.getItem("myDay"));
+  if (storedDay) {
+    myDay = storedDay; 
+  }
+  saveReminders(); 
+  displayReminders(); 
+}
 
-//show current date 
-currentDay.innerHTML = moment().format("ddd. MMMM Do, YYYY");
-
-
-//when save button is clicked 
-$(".saveBtn").on("click","button", function() {
-    console.log("save button clicked");
+//schedule body 
+myDay.forEach(function(thisHour) {
+  //creates time blocks 
+  var hourRow = $("<form>").attr({"class":"row"}); //create for with a class of "row"
+  $(".container").append(hourRow); //add row to container 
+  //created time field
+  var hourField = $("<div>")
+  .text(`${thisHour.hour}${thisHour.minute}`) //create text field with hour and am/pm
+  .attr({"class": "col-md-2 hour"}); // add column classes 
+  //creates schedule data 
+  var hourPlan = $("<div>")
+  .attr({"class":"col-md-9 description p-0"}); //create div add column classes 
+  var planData = $("<textarea>").attr({"class":"user-input"}); //create text area 
+  hourPlan.append(planData); // add hour div to text area 
+  planData.attr("index", thisHour.index); //add id to text area 
+  if (thisHour.time < moment().format("HH")) { //if time is less than current time, add past class 
+    planData.attr({"class":"past"})
+  } else if (thisHour.time === moment().format("HH")) { //if time is equal to current time, add present class 
+    planData.attr({"class": "present"})
+  } else if (thisHour.time > moment().format("HH")) { //if time is more than current time, add future class 
+    planData.attr({"class":"future"})
+  }
+  //create save button 
+  var saveButton = $("<i class='far fa-save fa-lg></i>") //create save button icon 
+  var savePlan = $("<button>").attr({"class": "col-md-1 saveBtn"}); //creat save button 
+  savePlan.append(saveButton); //add button to icon 
+  hourRow.append(hourField, hourPlan, savePlan); //add time and save button to row 
 });
 
-var loadTasks = function() {
-    tasks = JSON.parse(localStorage.getItem("tasks"));
-  
-    // if nothing in localStorage, create a new object to track all task status arrays
-    if (!tasks) {
-      tasks = {
-        toDo: [],
-        inProgress: [],
-        inReview: [],
-        done: []
-      };
-    }
-  
-    // loop over object properties
-    $.each(tasks, function(list, arr) {
-      console.log(list, arr);
-      // then loop over sub-array
-      arr.forEach(function(task) {
-        createTask(task.text, task.date, list);
-      });
-  
-    });
-  };
+//loads any existing localstorage data after components created 
+init(); 
 
-  var saveTasks = function() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  };
-  
+//saves data to be used in localStorage 
+$(".saveBtn").on("click", function(event) {
+  event.preventDefault(); 
+  var saveTextInput = $("user-input"); 
+  localStorage.setItem("saveTextInput", JSON.stringify(saveTextInput));
+  console.log(saveTextInput + "saved"); 
+  //var saveIndex = $(this).siblings(".description").children(".future").attr("index");
+ // myDay[saveIndex].reminder = $(this).siblings(".description").children(".future").val(); 
+ // console.log(saveIndex);
+  saveReminders(); 
+  displayReminders(); 
+})
+
