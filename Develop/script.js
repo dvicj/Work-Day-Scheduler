@@ -98,7 +98,7 @@ myDay.forEach(function(thisHour) {
   //creates schedule data 
   var hourPlan = $("<div>")
   .attr({"class":"col-9 description"}); //create div add column classes 
-  var planData = $("<textarea>").attr({"class":"user-input"}); //create text area 
+  var planData = $("<textarea id='userText'>").attr({"class":"user-input"}); //create text area 
   hourPlan.append(planData); // add hour div to text area 
   planData.attr("index", thisHour.index); //add id to text area 
   if (thisHour.time < moment().format("HH")) { //if time is less than current time, add past class 
@@ -118,20 +118,35 @@ myDay.forEach(function(thisHour) {
 //saves data to be used in localStorage 
 $(".saveBtn").on("click", function(event) {
   event.preventDefault(); 
-  saveTasks(); 
-  loadTasks(); 
+  saveTask(); 
+  //saveTasks(); 
+  //loadTasks(); 
 })
-var saveTextInput = $("tasks");
-var saveTasks = function() {
-  localStorage.setItem("saveTextInput", JSON.stringify(saveTextInput));
-  console.log ("tasks saved");
-}
-var loadTasks = function() {
-  var savedTasks = localStorage.getItem("saveTextInput");
-  //if there are no tasks to an empty array 
-  if (!savedTasks) {
-    return false; 
-  }
-  savedTasks = JSON.parse(savedTasks);
-}
+var text = JSON.parse(localStorage.getItem('userInput')) || [];
+var valueChanger = 1; 
 
+function saveTask() {
+  text.push($("#userText").val());
+  localStorage.setItem("userInput", JSON.stringify(text));
+  localStorage.getItem("userInput", JSON.stringify(text)); 
+}
+// var saveTasks = function() {
+//   localStorage.setItem("saveTextInput", JSON.stringify(saveTextInput));
+//   console.log ("tasks saved");
+// }
+// var loadTasks = function() {
+//   var savedTasks = localStorage.getItem("saveTextInput");
+//   //if there are no tasks to an empty array 
+//   if (!savedTasks) {
+//     return false; 
+//   }
+//   savedTasks = JSON.parse(savedTasks);
+// }
+
+// var text = JSON.parse(localStorage.getItem(".user-input")) || []; 
+// alert(localStorage.getItem(".user-input"));
+// function saveInfo () {
+//   text.push($('#userText').val()); 
+//   localStorage.setItem('.user-input', JSON.stringify(tetx));
+//   alert(localStorage.getItem('.user-input'));
+// }
