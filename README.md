@@ -53,7 +53,6 @@ Below are examples of the links for the CSS style sheet and the images used in t
 ![image relative path](https://github.com/dvicj/Horiseon-Accessibility/blob/main/image%20relative%20path.PNG)
 
 ## Usage
-![quiz in action](insert gif here)
 
 Here are some user experience highlights from my page: 
 
@@ -61,7 +60,7 @@ Here are some user experience highlights from my page:
 
     - all time blocks are updated and color coded as time passes throughout the day. The blocks are grey for time blocks that have already passed, red for time blocks which match the current time of day, and green for time blocks in the future. 
 
-    - when the user clicks on the save icon button, their task is saved to local storage and persists when the page is loaded. 
+    - when the user clicks on the save icon button, their task is saved to local storage
 
 ## Credits
 These are some sources I used to help me along:
