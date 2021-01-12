@@ -119,34 +119,22 @@ myDay.forEach(function(thisHour) {
 $(".saveBtn").on("click", function(event) {
   event.preventDefault(); 
   saveTask(); 
-  //saveTasks(); 
-  //loadTasks(); 
+  retrieveTask(); 
 })
 var text = JSON.parse(localStorage.getItem('userInput')) || [];
 var valueChanger = 1; 
 
-function saveTask() {
-  text.push($("#userText").val());
-  localStorage.setItem("userInput", JSON.stringify(text));
-  localStorage.getItem("userInput", JSON.stringify(text)); 
-}
-// var saveTasks = function() {
-//   localStorage.setItem("saveTextInput", JSON.stringify(saveTextInput));
-//   console.log ("tasks saved");
-// }
-// var loadTasks = function() {
-//   var savedTasks = localStorage.getItem("saveTextInput");
-//   //if there are no tasks to an empty array 
-//   if (!savedTasks) {
-//     return false; 
-//   }
-//   savedTasks = JSON.parse(savedTasks);
+// function saveTask() {
+//   text.push($("#userText").val());
+//   localStorage.setItem("userInput", JSON.stringify(text));
+//   //localStorage.getItem("userInput", JSON.stringify(text)); 
 // }
 
-// var text = JSON.parse(localStorage.getItem(".user-input")) || []; 
-// alert(localStorage.getItem(".user-input"));
-// function saveInfo () {
-//   text.push($('#userText').val()); 
-//   localStorage.setItem('.user-input', JSON.stringify(tetx));
-//   alert(localStorage.getItem('.user-input'));
-// }
+function saveTask () {
+  localStorage.userinput = JSON.stringify(text);
+}
+function retrieveTask() {
+  var x = localStorage.getItem("userinput");
+  $("#userText").innerHTML= x; 
+}
+
